@@ -23,6 +23,7 @@ export default function Search() {
   return (
     <>
       <TextField
+        className="SearchBar"
         onChange={(event) => setSearch(event.target.value)}
         onBlur={searchLocation}
         onKeyPress={searchLocation}
@@ -37,6 +38,7 @@ export default function Search() {
           }
           high={data.main.temp_max}
           low={data.main.temp_min}
+          icon={data.weather[0].icon}
         />
       ) : null}
     </>
