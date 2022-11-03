@@ -1,9 +1,13 @@
-@import-normalize;
-
+body{
+    margin: 0 ;
+}
 .App_container {
-    max-width: 1080px;
-    margin: 20px auto;
-    background: linear-gradient(169.61deg, #2E3358 2.83%, #1C1B33 94.85%);
-    box-shadow: -40px 60px 150px rgba(59, 38, 123, 0.7);
-    border-radius: 46px;
+    max-width: 1000px;
+    height: 100vh;
+    /* margin: 10px auto; */
+    background: lightblue;
+    border: solid black 1px;
+    /* background: linear-gradient(169.61deg, #2E3358 2.83%, #1C1B33 94.85%);
+    box-shadow: -40px 60px 150px rgba(59, 38, 123, 0.7); */
+    /* border-radius: 46px; */
 }

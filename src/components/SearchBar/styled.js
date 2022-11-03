@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
 
 export const StyledSearchBar = styled.div`
-  .MuiInput-root {
-    padding-inline: 2%;
-    background-color: rgba(1, 1, 1, 0.1);
-    border-radius: 5px;
-    height: 4rem;
-  }
+  display: grid;
   .SearchBar {
-    width: 300px !important;
+    height: 40px;
+    background: #fdfcfc;
+    border-radius: 15px;
+    border-style: none;
+    margin: 25px auto;
+    width: 50vw;
+    padding: 0 20px;
   }
 `;
