@@ -8,28 +8,48 @@ import { StyledSearchBar } from "./styled";
 export default function Search() {
   const [data, setData] = useState("");
   const [search, setSearch] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState("");
+  const [getCity, setGetCity] = useState("");
+  const [weatherData, setWeatherData] = useState("");
+  const [forecastData, setForecastData] = useState("");
+  // const [error, setError] = useState("");
+  // const [loading, setLoading] = useState("");
 
   const searchLocation = (event) => {
     if (event.key === "Enter") {
-      axios.get(API_URL).then((response) => {
-        setData(response.data);
-        console.log(response.data);
-      });
+      handleSearchLocation();
     }
   };
-  const searchBar = document.querySelector("input");
 
+  const BASE_URL = "https://api.openweathermap.org/data/2.5/";
   const API_KEY = "ada1fdb05bf77ae3b41e5a76923d558f";
-  const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${API_KEY}&units=metric`;
+
+  const handleSearchLocation = (dataSearch) => {
+    const weatherDataFetch = fetch(
+      `${BASE_URL}/weather?q=${search}&&appid=${API_KEY}&units=metric`
+    );
+    const forecastDataFetch = fetch(
+      `${BASE_URL}/forecast?q=${search}&appid=${API_KEY}&units=metric`
+    );
+
+    Promise.all([weatherDataFetch, forecastDataFetch])
+      .then(async (response) => {
+        const weatherResponse = await response[0].json();
+        const forecastResponse = await response[1].json();
+
+        setGetCity(dataSearch);
+        setWeatherData(weatherResponse);
+        setForecastData(forecastResponse);
+        console.log(weatherResponse);
+        console.log(forecastResponse);
+      })
+      .catch(console.log);
+  };
 
   return (
     <StyledSearchBar>
       <input
         className="SearchBar"
         onChange={(event) => setSearch(event.target.value)}
-        onBlur={searchLocation}
         onKeyPress={searchLocation}
         placeholder="Search for a city or airport"
       />
@@ -43,8 +63,10 @@ export default function Search() {
           high={data.main.temp_max}
           low={data.main.temp_min}
           icon={data.weather[0].icon}
-          latitude={data.coord.lat}
-          longitude={data.coord.lon}
+          population={data.city.population}
+          country={data.city.country}
+          sunrise={data.city.sunrise}
+          sunset={data.city.sunset}
         />
       ) : null}
     </StyledSearchBar>

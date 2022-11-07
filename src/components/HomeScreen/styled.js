@@ -41,3 +41,15 @@ export const HouseContainer = styled.div`
   display: block;
   background: image("/src/images/background.png");
 `;
+
+export const RainProbability = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 80%;
+  text-align: center;
+  margin: 12px auto;
+  background: #fdfcfc;
+  border-radius: 11px;
+  padding: 6px 20px;
+  color: #c4c4c4;
+`;
