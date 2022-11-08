@@ -5,7 +5,9 @@ import {
   TopDataContainer,
   RainProbability,
 } from "./styled";
-
+import WbTwilightIcon from "@mui/icons-material/WbTwilight";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import UmbrellaIcon from "@mui/icons-material/Umbrella";
 export default function HomeScreen({
   city,
   temperature,
@@ -17,8 +19,10 @@ export default function HomeScreen({
   country,
   sunrise,
   sunset,
+  time,
 }) {
   const weatherIcon = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+
   return (
     <HomeScreenContainer>
       <TopDataContainer>
@@ -40,29 +44,29 @@ export default function HomeScreen({
           </Grid>
           <Grid className="temperature_low">
             <Typography variant="h3">L:{Math.round(low)}°</Typography>
-            <Typography variant="h3">L:{population}</Typography>
-            <Typography variant="h3">L:{country}</Typography>
-            <Typography variant="h3">L:{sunrise}</Typography>
-            <Typography variant="h3">L:{sunset}</Typography>
           </Grid>
         </Grid>
       </TopDataContainer>
       <RainProbability>
         <Grid>
+          <AccessTimeIcon sx={{ color: "#335d7e" }} />
           <Typography>Time</Typography>
-          <Typography>11:02</Typography>
+          <Typography>{time}</Typography>
         </Grid>
         <Grid>
-          <Typography>UV</Typography>
-          <Typography>4</Typography>
+          <WbTwilightIcon sx={{ color: "#eeaf61" }} />
+          <Typography>Sunrise</Typography>
+          <Typography>{sunrise}</Typography>
         </Grid>
         <Grid>
-          <Typography>% Rain</Typography>
+          <WbTwilightIcon sx={{ color: "#e84f0c" }} />
+          <Typography>Sunset</Typography>
+          <Typography>{sunset}</Typography>
+        </Grid>
+        <Grid>
+          <UmbrellaIcon sx={{ color: "#6d5c7d" }} />
+          <Typography>Rain%</Typography>
           <Typography>10%</Typography>
-        </Grid>
-        <Grid>
-          <Typography>AQ</Typography>
-          <Typography>22</Typography>
         </Grid>
       </RainProbability>
     </HomeScreenContainer>

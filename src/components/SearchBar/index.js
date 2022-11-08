@@ -6,7 +6,6 @@ import HomeScreen from "../HomeScreen";
 import { StyledSearchBar } from "./styled";
 
 export default function Search() {
-  const [data, setData] = useState("");
   const [search, setSearch] = useState("");
   const [getCity, setGetCity] = useState("");
   const [weatherData, setWeatherData] = useState("");
@@ -44,7 +43,21 @@ export default function Search() {
       })
       .catch(console.log);
   };
-
+  const timeFormatter = (time) => {
+    // Create a new JavaScript Date object based on the timestamp
+    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+    const date = new Date(time * 1000);
+    // Hours part from the timestamp
+    const hours = date.getHours();
+    // Minutes part from the timestamp
+    const minutes = "0" + date.getMinutes();
+    // Seconds part from the timestamp
+    const seconds = "0" + date.getSeconds();
+    // Will display time in 10:30:23 format
+    const formattedTime =
+      hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
+    return formattedTime;
+  };
   return (
     <StyledSearchBar>
       <input
@@ -53,20 +66,21 @@ export default function Search() {
         onKeyPress={searchLocation}
         placeholder="Search for a city or airport"
       />
-      {data !== "" ? (
+      {weatherData !== "" ? (
         <HomeScreen
-          city={data.name}
-          temperature={data.main.temp}
+          city={weatherData.name}
+          temperature={weatherData.main.temp}
           clouds={
-            data.weather[0] ? <Grid>{data.weather[0].description}</Grid> : null
+            weatherData.weather[0] ? (
+              <Grid>{weatherData.weather[0].description}</Grid>
+            ) : null
           }
-          high={data.main.temp_max}
-          low={data.main.temp_min}
-          icon={data.weather[0].icon}
-          population={data.city.population}
-          country={data.city.country}
-          sunrise={data.city.sunrise}
-          sunset={data.city.sunset}
+          high={weatherData.main.temp_max}
+          low={weatherData.main.temp_min}
+          icon={weatherData.weather[0].icon}
+          sunrise={timeFormatter(weatherData.sys.sunrise)}
+          sunset={timeFormatter(weatherData.sys.sunset)}
+          time={timeFormatter(weatherData.dt)}
         />
       ) : null}
     </StyledSearchBar>
