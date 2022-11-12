@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 
 export const HomeScreenContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  background: image();
+  /* width: 100%;
+  height: 100%; */
 `;
 export const TopDataContainer = styled.div`
   width: 100%;
@@ -34,12 +33,6 @@ export const TopDataContainer = styled.div`
     grid-template-columns: 1fr 1fr;
     margin-top: 20px;
   }
-`;
-export const HouseContainer = styled.div`
-  width: 100px;
-  height: 100px;
-  display: block;
-  background: image("/src/images/background.png");
 `;
 
 export const RainProbability = styled.div`
