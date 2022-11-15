@@ -48,6 +48,7 @@ function App() {
         }}
       >
         <InputBase
+          // fullWidth
           autoFocus
           type={search}
           className="SearchBar"
