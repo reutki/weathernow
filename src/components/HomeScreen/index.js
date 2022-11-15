@@ -8,7 +8,9 @@ import {
 import WbTwilightIcon from "@mui/icons-material/WbTwilight";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import UmbrellaIcon from "@mui/icons-material/Umbrella";
+import AirIcon from "@mui/icons-material/Air";
 export default function HomeScreen({ data }) {
+  console.log(data);
   const weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
   const timeFormatter = (time) => {
     const unixTimestamp = time;
@@ -77,9 +79,9 @@ export default function HomeScreen({ data }) {
           <Typography>{timeFormatter(data.sys.sunset)[1]}</Typography>
         </Grid>
         <Grid>
-          <UmbrellaIcon sx={{ color: "#6d5c7d" }} />
-          <Typography>Rain%</Typography>
-          <Typography>10%</Typography>
+          <AirIcon sx={{ color: "#6d5c7d" }} />
+          <Typography>Wind</Typography>
+          <Typography>{data.wind.speed}Km/H</Typography>
         </Grid>
       </RainProbability>
     </HomeScreenContainer>

@@ -1,11 +1,9 @@
 import "./App.css";
 import HomeScreen from "./components/HomeScreen";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Forecast } from "./components/Forecast";
 import { InputBase, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Loader } from "./components/LoadingScreen";
-import Error from "./components/ErrorScreen";
 
 function App() {
   const [search, setSearch] = useState("");
