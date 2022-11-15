@@ -10,9 +10,25 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import UmbrellaIcon from "@mui/icons-material/Umbrella";
 export default function HomeScreen({ data }) {
   const weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-  const timeFormatter = (date) => {
-    let time = new Date(date);
-    return time.toLocaleTimeString();
+  const timeFormatter = (time) => {
+    const unixTimestamp = time;
+
+    const milliseconds = time * 1000; // 1575909015000
+
+    const dateObject = new Date(milliseconds);
+
+    const humanDateFormat = dateObject.toLocaleString(); //2019-12-9 10:30:15
+
+    dateObject.toLocaleString("en-GB", { weekday: "long" }); // Monday
+    dateObject.toLocaleString("en-GB", { month: "long" }); // December
+    dateObject.toLocaleString("en-GB", { day: "numeric" }); // 9
+    dateObject.toLocaleString("en-GB", { year: "numeric" }); // 2019
+    dateObject.toLocaleString("en-GB", { hour: "numeric" }); // 10 AM
+    dateObject.toLocaleString("en-GB", { minute: "numeric" }); // 30
+    dateObject.toLocaleString("en-GB", { second: "numeric" }); // 15
+    dateObject.toLocaleString("en-GB", { timeZoneName: "short" }); // 12/9/2019, 10:30:15 AM CST
+
+    return [humanDateFormat.slice(12, 17), humanDateFormat.slice(12, 16)];
   };
   return (
     <HomeScreenContainer>
@@ -48,17 +64,17 @@ export default function HomeScreen({ data }) {
         <Grid>
           <AccessTimeIcon sx={{ color: "#335d7e" }} />
           <Typography>Time</Typography>
-          <Typography>{timeFormatter(data.dt)}</Typography>
+          <Typography>{timeFormatter(data.dt)[0]}</Typography>
         </Grid>
         <Grid>
           <WbTwilightIcon sx={{ color: "#eeaf61" }} />
           <Typography>Sunrise</Typography>
-          <Typography>{timeFormatter(data.sys.sunrise)}</Typography>
+          <Typography>{timeFormatter(data.sys.sunrise)[1]}</Typography>
         </Grid>
         <Grid>
           <WbTwilightIcon sx={{ color: "#e84f0c" }} />
           <Typography>Sunset</Typography>
-          <Typography>{timeFormatter(data.sys.sunset)}</Typography>
+          <Typography>{timeFormatter(data.sys.sunset)[1]}</Typography>
         </Grid>
         <Grid>
           <UmbrellaIcon sx={{ color: "#6d5c7d" }} />

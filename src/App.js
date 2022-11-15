@@ -2,11 +2,12 @@ import "./App.css";
 import HomeScreen from "./components/HomeScreen";
 import { useState } from "react";
 import { Forecast } from "./components/Forecast";
+import { InputBase, InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 // const [loading, setLoading] = useState("");
 function App() {
   const [search, setSearch] = useState("");
-  const [getCity, setGetCity] = useState("");
   const [weatherData, setWeatherData] = useState("");
   const [forecastData, setForecastData] = useState("");
   // const [error, setError] = useState("");
@@ -26,7 +27,6 @@ function App() {
       .then(async (response) => {
         const weatherResponse = await response[0].json();
         const forecastResponse = await response[1].json();
-        setGetCity(dataSearch);
         setWeatherData(weatherResponse);
         setForecastData(forecastResponse);
       })
@@ -47,11 +47,18 @@ function App() {
           e.preventDefault();
         }}
       >
-        <input
+        <InputBase
+          autoFocus
+          type={search}
           className="SearchBar"
           onChange={(e) => setSearch(e.target.value)}
           onKeyPress={searchLocation}
-          placeholder="Search for a city or airport"
+          placeholder="Search for a city"
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
         />
       </form>
       {weatherData !== "" ? <HomeScreen data={weatherData} /> : null}

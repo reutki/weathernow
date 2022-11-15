@@ -9,7 +9,6 @@ import {
 } from "react-accessible-accordion";
 import { List, Stack, Typography } from "@mui/material";
 export const Forecast = ({ data }) => {
-  console.log(data);
   const forecast = data.list;
   const dateConverter = (time) => {
     const unixTimestamp = time;
