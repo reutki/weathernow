@@ -1,21 +1,21 @@
 import "./App.css";
 import HomeScreen from "./components/HomeScreen";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Forecast } from "./components/Forecast";
 import { InputBase, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { Loader } from "./components/LoadingScreen";
+import Error from "./components/ErrorScreen";
 
-// const [loading, setLoading] = useState("");
 function App() {
   const [search, setSearch] = useState("");
   const [weatherData, setWeatherData] = useState("");
   const [forecastData, setForecastData] = useState("");
-  // const [error, setError] = useState("");
 
   const BASE_URL = "https://api.openweathermap.org/data/2.5/";
   const API_KEY = "ada1fdb05bf77ae3b41e5a76923d558f";
 
-  const handleSearchLocation = (dataSearch) => {
+  const handleSearchLocation = () => {
     const weatherDataFetch = fetch(
       `${BASE_URL}/weather?q=${search}&&appid=${API_KEY}&units=metric`
     );
@@ -30,7 +30,7 @@ function App() {
         setWeatherData(weatherResponse);
         setForecastData(forecastResponse);
       })
-      .catch(console.log);
+      .catch((response) => console.log(response));
   };
 
   const searchLocation = (event) => {
@@ -48,7 +48,6 @@ function App() {
         }}
       >
         <InputBase
-          // fullWidth
           autoFocus
           type={search}
           className="SearchBar"
@@ -62,6 +61,7 @@ function App() {
           }
         />
       </form>
+
       {weatherData !== "" ? <HomeScreen data={weatherData} /> : null}
       {forecastData !== "" ? <Forecast data={forecastData} /> : null}
     </div>
