@@ -6,16 +6,17 @@ import { InputBase, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Loader } from "./components/LoadingScreen";
 import Welcome from "./components/WelcomeScreen";
+import ErrorScreen from "./components/ErrorScreen";
 
-function App() {
+export function App() {
   const [search, setSearch] = useState("");
   const [weatherData, setWeatherData] = useState("");
   const [forecastData, setForecastData] = useState("");
   const [welcome, setWelcome] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setError] = useState(false);
 
   useEffect(() => {
-    // Wait for 3 seconds
     setTimeout(() => {
       setWelcome(false);
     }, 2000);
@@ -35,11 +36,18 @@ function App() {
       .then(async (response) => {
         const weatherResponse = await response[0].json();
         const forecastResponse = await response[1].json();
-        setWeatherData(weatherResponse);
-        setForecastData(forecastResponse);
-        setIsLoading(false);
+        if ((response[0].ok == true) & (response[1].ok == true)) {
+          setWeatherData(weatherResponse);
+          setForecastData(forecastResponse);
+          setIsLoading(false);
+          setError(false);
+        }
       })
-      .catch((response) => console.log(response));
+
+      .catch(setError(true), setIsLoading(false), (err) => {
+        console.log(isError);
+        console.log(err);
+      });
   };
 
   const searchLocation = (event) => {
@@ -77,19 +85,26 @@ function App() {
           />
         </form>
       )}
-      {isLoading ? (
-        <Loader />
+      {isError ? (
+        <ErrorScreen />
       ) : (
         <>
-          {weatherData !== "" || null || undefined ? (
-            <HomeScreen data={weatherData} />
-          ) : null}
-          {forecastData !== "" || null || undefined ? (
-            <Forecast data={forecastData} />
-          ) : null}
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              {weatherData !== "" || undefined || null ? (
+                <HomeScreen data={weatherData} />
+              ) : null}
+              {forecastData !== "" || undefined || null ? (
+                <Forecast data={forecastData} />
+              ) : null}
+            </>
+          )}
         </>
       )}
     </div>
   );
 }
+
 export default App;
