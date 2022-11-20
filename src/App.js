@@ -11,13 +11,14 @@ function App() {
   const [search, setSearch] = useState("");
   const [weatherData, setWeatherData] = useState("");
   const [forecastData, setForecastData] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [welcome, setWelcome] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Wait for 3 seconds
     setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+      setWelcome(false);
+    }, 2000);
   }, []);
 
   const BASE_URL = "https://api.openweathermap.org/data/2.5/";
@@ -30,26 +31,29 @@ function App() {
     const forecastDataFetch = fetch(
       `${BASE_URL}/forecast?q=${search}&appid=${API_KEY}&units=metric`
     );
-
     Promise.all([weatherDataFetch, forecastDataFetch])
       .then(async (response) => {
         const weatherResponse = await response[0].json();
         const forecastResponse = await response[1].json();
         setWeatherData(weatherResponse);
         setForecastData(forecastResponse);
+        setIsLoading(false);
       })
       .catch((response) => console.log(response));
   };
 
   const searchLocation = (event) => {
     if (event.key === "Enter") {
-      handleSearchLocation();
+      setTimeout(() => {
+        setIsLoading(true);
+        handleSearchLocation();
+      }, 2000);
     }
   };
 
   return (
     <div className="App_container">
-      {isLoading ? (
+      {welcome ? (
         <Welcome />
       ) : (
         <form
@@ -73,13 +77,18 @@ function App() {
           />
         </form>
       )}
-
-      {weatherData !== "" || null || undefined ? (
-        <HomeScreen data={weatherData} />
-      ) : null}
-      {forecastData !== "" || null || undefined ? (
-        <Forecast data={forecastData} />
-      ) : null}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          {weatherData !== "" || null || undefined ? (
+            <HomeScreen data={weatherData} />
+          ) : null}
+          {forecastData !== "" || null || undefined ? (
+            <Forecast data={forecastData} />
+          ) : null}
+        </>
+      )}
     </div>
   );
 }
