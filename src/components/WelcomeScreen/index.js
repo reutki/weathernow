@@ -5,9 +5,9 @@ import { WelcomeStyle } from "./styled";
 export default function Welcome() {
   return (
     <WelcomeStyle
-      animate={{ opacity: 1 }}
+      animate={{ opacity: [0, 1, 0] }}
       transition={{
-        opacity: { ease: "linear", duration: 0.7 },
+        opacity: { ease: "easeIn", duration: 3 },
       }}
     >
       <AirIcon className="icon" fontSize="large" />
