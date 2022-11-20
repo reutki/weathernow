@@ -1,14 +1,24 @@
 import "./App.css";
 import HomeScreen from "./components/HomeScreen";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Forecast } from "./components/Forecast";
 import { InputBase, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { Loader } from "./components/LoadingScreen";
+import Welcome from "./components/WelcomeScreen";
 
 function App() {
   const [search, setSearch] = useState("");
   const [weatherData, setWeatherData] = useState("");
   const [forecastData, setForecastData] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Wait for 3 seconds
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
 
   const BASE_URL = "https://api.openweathermap.org/data/2.5/";
   const API_KEY = "ada1fdb05bf77ae3b41e5a76923d558f";
@@ -39,29 +49,37 @@ function App() {
 
   return (
     <div className="App_container">
-      <form
-        className="searchForm"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <InputBase
-          autoFocus
-          type={search}
-          className="SearchBar"
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyPress={searchLocation}
-          placeholder="Search for a city"
-          startAdornment={
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          }
-        />
-      </form>
+      {isLoading ? (
+        <Welcome />
+      ) : (
+        <form
+          className="searchForm"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <InputBase
+            autoFocus
+            type={search}
+            className="SearchBar"
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyPress={searchLocation}
+            placeholder="Search for a city"
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            }
+          />
+        </form>
+      )}
 
-      {weatherData !== "" ? <HomeScreen data={weatherData} /> : null}
-      {forecastData !== "" ? <Forecast data={forecastData} /> : null}
+      {weatherData !== "" || null || undefined ? (
+        <HomeScreen data={weatherData} />
+      ) : null}
+      {forecastData !== "" || null || undefined ? (
+        <Forecast data={forecastData} />
+      ) : null}
     </div>
   );
 }

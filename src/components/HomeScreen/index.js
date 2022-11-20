@@ -7,20 +7,17 @@ import {
 } from "./styled";
 import WbTwilightIcon from "@mui/icons-material/WbTwilight";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import UmbrellaIcon from "@mui/icons-material/Umbrella";
 import AirIcon from "@mui/icons-material/Air";
-export default function HomeScreen({ data }) {
-  console.log(data);
-  const weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-  const timeFormatter = (time) => {
-    const unixTimestamp = time;
 
+export default function HomeScreen({ data }) {
+  const weatherIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+
+  const timeFormatter = (time) => {
     const milliseconds = time * 1000; // 1575909015000
 
     const dateObject = new Date(milliseconds);
 
     const humanDateFormat = dateObject.toLocaleString(); //2019-12-9 10:30:15
-
     dateObject.toLocaleString("en-GB", { weekday: "long" }); // Monday
     dateObject.toLocaleString("en-GB", { month: "long" }); // December
     dateObject.toLocaleString("en-GB", { day: "numeric" }); // 9

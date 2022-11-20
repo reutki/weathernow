@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
 
 export const SyledLoader = styled.div`
+  height: 100%;
+  width: 100%;
   display: grid;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   .bar {
     width: 100px;
