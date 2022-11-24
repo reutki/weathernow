@@ -36,6 +36,7 @@ export function App() {
       .then(async (response) => {
         const weatherResponse = await response[0].json();
         const forecastResponse = await response[1].json();
+
         if ((response[0].ok == true) & (response[1].ok == true)) {
           setWeatherData(weatherResponse);
           setForecastData(forecastResponse);
@@ -44,18 +45,22 @@ export function App() {
         }
       })
 
-      .catch(setError(true), setIsLoading(false), (err) => {
-        console.log(isError);
-        console.log(err);
-      });
+      .catch(
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1500),
+        setError(true),
+        (err) => {
+          console.log(isError);
+          console.log(err);
+        }
+      );
   };
 
   const searchLocation = (event) => {
     if (event.key === "Enter") {
-      setTimeout(() => {
-        setIsLoading(true);
-        handleSearchLocation();
-      }, 2000);
+      setIsLoading(true);
+      handleSearchLocation();
     }
   };
 
@@ -85,12 +90,12 @@ export function App() {
           />
         </form>
       )}
-      {isError ? (
-        <ErrorScreen />
+      {isLoading ? (
+        <Loader />
       ) : (
         <>
-          {isLoading ? (
-            <Loader />
+          {isError ? (
+            <ErrorScreen />
           ) : (
             <>
               {weatherData !== "" || undefined || null ? (
